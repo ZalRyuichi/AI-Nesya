@@ -794,7 +794,23 @@
 
     function step() {
       i = Math.min(i + chunk, total);
-      bubble.innerHTML = marked.parse(fullText.slice(0, i));
+      const partial = fullText.slice(0, i);
+      if (i >= total) {
+        // Render final markdown penuh (paling akurat)
+        try {
+          bubble.innerHTML = marked.parse(fullText);
+        } catch (e) {
+          bubble.textContent = fullText;
+        }
+      } else {
+        // Selama proses ngetik, parsing markdown partial bisa error
+        // (misal fenced code block belum ketutup), jadi fallback ke plain text
+        try {
+          bubble.innerHTML = marked.parse(partial);
+        } catch (e) {
+          bubble.textContent = partial;
+        }
+      }
       scrollToBottom();
       if (i < total) {
         requestAnimationFrame(() => setTimeout(step, 12));
