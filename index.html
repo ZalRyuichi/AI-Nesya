@@ -524,35 +524,22 @@
   </div>
 </header>
 
-<div class="mode-bar" id="mode-bar">
-  <div class="mode-chip active" data-mode="curhat"><i class="fa-solid fa-comment-dots"></i> Curhat</div>
-  <div class="mode-chip" data-mode="pacaran"><i class="fa-solid fa-heart"></i> Pacaran</div>
-  <div class="mode-chip" data-mode="coding"><i class="fa-solid fa-code"></i> Coding</div>
-  <div class="mode-chip" data-mode="tugas"><i class="fa-solid fa-book"></i> Tugas</div>
-</div>
+
 
 <div class="chat-wrap" id="chat-wrap">
   <div class="chat-inner" id="chat-inner">
     <div class="empty-state" id="empty-state">
       <div class="empty-mark"><img src="nesya.jpg" alt="Nesya" onerror="this.style.display='none';this.parentElement.innerHTML='<i class=\'fa-solid fa-sparkles\'></i>'"/></div>
       <div class="empty-title">Halo, aku Nesya 👋</div>
-      <div class="empty-sub">Asisten AI yang di buat oleh Zal Яyuichi. Pilih mode di atas, atau langsung mulai ngobrol, aku siap bantu curhat, nemenin ngobrol, ngoding, sampai bantu tugas sekolah.</div>
+      <div class="empty-sub">Hai, aku Nesya — pacar virtual kamu yang selalu ada buat kamu 💕</div>
       <div class="suggestion-grid">
-        <div class="suggestion-card" data-prompt="Halo Nesya, lagi capek banget nih hari ini">
-          <strong><i class="fa-solid fa-comment-dots"></i>Curhat</strong>
-          "Lagi capek banget nih hari ini..."
-        </div>
-        <div class="suggestion-card" data-prompt="Buatin aku fungsi JavaScript untuk validasi email">
-          <strong><i class="fa-solid fa-code"></i>Coding</strong>
-          Buatin fungsi validasi email
-        </div>
-        <div class="suggestion-card" data-prompt="Tolong jelasin rumus luas lingkaran dan contoh soalnya">
-          <strong><i class="fa-solid fa-book"></i>Tugas</strong>
-          Jelasin rumus luas lingkaran
-        </div>
         <div class="suggestion-card" data-prompt="Hai sayang, kamu udah makan belum?">
-          <strong><i class="fa-solid fa-heart"></i>Pacaran</strong>
+          <strong><i class="fa-solid fa-heart"></i>Sapa Nesya</strong>
           "Hai sayang, udah makan belum?"
+        </div>
+        <div class="suggestion-card" data-prompt="Nes, aku kangen sama kamu">
+          <strong><i class="fa-solid fa-heart"></i>Kangen</strong>
+          "Nes, aku kangen sama kamu"
         </div>
       </div>
     </div>
@@ -671,7 +658,7 @@
   }
 
   let API_BASE = "http://localhost:3000";
-  let currentMode = "curhat";
+  let currentMode = "pacaran";
   let sessionId = localStorage.getItem("nesya_session") || ("sess_" + Math.random().toString(36).slice(2, 10));
   localStorage.setItem("nesya_session", sessionId);
 
@@ -680,7 +667,6 @@
   const emptyState  = document.getElementById("empty-state");
   const msgInput    = document.getElementById("msg-input");
   const sendBtn     = document.getElementById("send-btn");
-  const modeBar     = document.getElementById("mode-bar");
   const statusText  = document.getElementById("status-text");
   const themeBtn    = document.getElementById("theme-btn");
   const themeIcon   = document.getElementById("theme-icon");
@@ -732,13 +718,7 @@
     }
   }
 
-  modeBar.addEventListener("click", (e) => {
-    const chip = e.target.closest(".mode-chip");
-    if (!chip) return;
-    document.querySelectorAll(".mode-chip").forEach(c => c.classList.remove("active"));
-    chip.classList.add("active");
-    currentMode = chip.dataset.mode;
-  });
+  
 
   document.querySelectorAll(".suggestion-card").forEach(card => {
     card.addEventListener("click", () => {
